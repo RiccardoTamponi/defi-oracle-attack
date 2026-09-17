@@ -78,10 +78,10 @@ contract AttackTest is Test {
         uint256 trueCollValue  = (collateralHeld * priceTrue) / 1e18; // valore VERO del collaterale
         uint256 lendingLoss    = ethLentOut - trueCollValue;
 
-        console.log("Profitto attaccante (wei):", attackerProfit);
-        console.log("ETH prestato dal lending  :", ethLentOut);
-        console.log("Valore vero collaterale   :", trueCollValue);
-        console.log("Perdita del lending (wei) :", lendingLoss);
+        console.log("Profitto attaccante (ETH):", fmtEth(attackerProfit));
+        console.log("ETH prestato dal lending  :", fmtEth(ethLentOut));
+        console.log("Valore vero collaterale   :", fmtEth(trueCollValue));
+        console.log("Perdita del lending (ETH) :", fmtEth(lendingLoss));
 
         // 1) L'attaccante ci guadagna
         assertGt(attackerProfit, 0, "l'attacco deve essere profittevole");
@@ -92,6 +92,18 @@ contract AttackTest is Test {
         // 4) La VITTIMA (il lending) perde: ha prestato piu' ETH del valore vero del collaterale
         assertGt(lendingLoss, 0, "il lending deve subire una perdita");
     }
+
+    function fmtEth(uint256 weiAmount) internal pure returns (string memory) {
+        uint256 whole = weiAmount / 1e18;
+        uint256 frac2 = (weiAmount % 1e18) / 1e16; // primi 2 decimali
+        return string.concat(
+            vm.toString(whole),
+            ".",
+            frac2 < 10 ? "0" : "",   // padding: 240.05, non 240.5
+            vm.toString(frac2)
+    );
+}
+
 }
 
 
