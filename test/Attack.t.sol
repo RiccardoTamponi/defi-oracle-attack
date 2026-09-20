@@ -101,9 +101,8 @@ contract AttackTest is Test {
             ".",
             frac2 < 10 ? "0" : "",   // padding: 240.05, non 240.5
             vm.toString(frac2)
-    );
-}
-
+        );
+    }
 }
 
 
