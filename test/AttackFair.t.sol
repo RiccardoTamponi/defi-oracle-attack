@@ -32,7 +32,7 @@ contract AttackFairTest is Test {
     uint256 constant MARKET_STOCK = 1_000_000e18; // sUSD in vendita a prezzo giusto
 
     uint256 constant PUMP     = 900e18;  // dx/X = 0.9
-    uint256 constant PUMP_LOW = 300e18;  // dx/X = 0.3, sotto la soglia 0.499 del §6
+    uint256 constant PUMP_LOW = 300e18;  // dx/X = 0.3, sotto la soglia (1-cf)/cf = 0.499
     uint256 constant FAIR     = 1000e18; // ETH spesi a prezzo giusto
 
     uint256 priceTrue; // prezzo vero di sUSD (ETH per 1 sUSD) prima dell'attacco
@@ -99,7 +99,7 @@ contract AttackFairTest is Test {
         uint256 profit = eth.balanceOf(address(attackerFair));
 
         console.log("Profitto pump 300 + giusto 1000 (ETH):", fmtEth(profit));
-        assertGt(profit, 0, "sotto la soglia del 6, col prezzo giusto l'attacco rende");
+        assertGt(profit, 0, "sotto la soglia, col prezzo giusto l'attacco rende");
     }
 
     function test_FairLeg_BlockedByTWAP() public {
