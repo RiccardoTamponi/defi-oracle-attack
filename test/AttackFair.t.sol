@@ -71,7 +71,7 @@ contract AttackFairTest is Test {
         lending.fund(LEND_LIQ);
     }
 
-        function test_FairLeg_MultipliesProfit() public {
+    function test_FairLeg_MultipliesProfit() public {
         // Fotografo lo stato, eseguo l'attacco di SOLO pump, poi torno alla fotografia
         uint256 snap = vm.snapshotState();
         attacker.attack(PUMP);
@@ -102,7 +102,7 @@ contract AttackFairTest is Test {
         assertGt(profit, 0, "sotto la soglia del 6, col prezzo giusto l'attacco rende");
     }
 
-        function test_FairLeg_BlockedByTWAP() public {
+    function test_FairLeg_BlockedByTWAP() public {
         // Un secondo lending, identico ma con l'oracolo TWAP
         PriceOracleTWAP twap = new PriceOracleTWAP(amm);
         VulnerableLending lendingTwap = new VulnerableLending(susd, eth, twap, CF);
